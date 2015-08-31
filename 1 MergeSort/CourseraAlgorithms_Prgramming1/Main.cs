@@ -9,7 +9,7 @@ namespace CourseraAlgorithms_Prgramming1
 	{
 		public static void Main (string[] args)
 		{
-			string[] file = File.ReadAllLines("/Users/redahanb/IntegerArray.txt"); 
+			string[] file = File.ReadAllLines("/Users/redahanb/GitHub/Coursera_Algorithms/1 MergeSort/IntegerArray.txt"); 
 			int[] intArray = new int[file.Length];
 
 

@@ -1,0 +1,107 @@
+import heapq
+
+
+f = open('Median.txt', 'r')
+#f = open('test10.txt', 'r')  # test case: answer should be 4629
+#f = open('test20.txt', 'r')  # test case: answer should be grand sum of 88525
+#f = open('test100.txt', 'r')  # test case: answer should be 6138
+#f = open('test1000.txt', 'r')  # test case: answer should be 8687
+#f = open('test10000.txt', 'r')  # test case: answer should be 6283
+lines = [int(i) for i in f.readlines()]
+
+count = []
+maxH = []
+minH = []
+
+counter = 0
+sumM = 0
+
+
+# function to reverse a heap by multiplying each element by -1 (the new min is the actual max
+def reverseH(heap):
+    a = [-1*abs(x) for x in heap]
+    heapq.heapify(a)
+    return a
+
+
+for line in lines:
+    count.append(line)
+    counter += 1
+    print "Round " + str(counter)
+
+    # first cases, set up the min/max heaps (HARDCODED TO START CORRECTLY)
+    if len(count) <= 1:
+        #minH.append(line)
+        sumM += line
+        #print "Median is: " + str(line)
+
+    if len(count) == 2:
+        srt = sorted(count)
+        minH.append(srt[1])
+        maxH.append(srt[0])
+        sumM += srt[0]
+       # print "Median is: " + str(srt[0])
+
+    # all cases after 1 & 2
+    if len(count) > 2:
+        maxH = reverseH(maxH)
+        heapq.heapify(minH)
+        #print str(line) + ", " + str(maxH[0]) + ", " + str(minH[0])
+        # if the new entry is less than the max of the lower half, add it to the lower half
+        if line < abs(maxH[0]):
+            temp = -1*line
+            heapq.heappush(maxH, temp)
+        # else if the new entry is greater than the min of the upper half, add it to the upper half
+        elif line > abs(maxH[0]):
+            heapq.heappush(minH, line)
+
+    #  need to maintain equal sizes for the 2 heaps
+    #  if even, make sure they are the same size
+    if len(count) % 2 == 0:
+        if len(maxH) != len(minH):
+            if len(maxH) > len(minH):
+                while len(maxH) > len(minH):
+                    temp = heapq.heappop(maxH)
+                    heapq.heappush(minH, abs(temp))  # anytime I pop from the maxH heap the element is negative
+            elif len(maxH) < len(minH):
+                while len(maxH) < len(minH):
+                    heapq.heappush(maxH, -1*heapq.heappop(minH))  # when push to the maxH heap the element is positive
+        #elif len(maxH) != len(minH):
+            # elifif len(maxH) < len(minH):
+            #     while len(maxH) < len(minH):
+            #         heapq.heappush(maxH, -1*heapq.heappop(minH))  # when push to the maxH heap the element is positive
+
+    #  if odd, make sure they are no more than 1 apart
+    elif len(count) % 2 != 0:
+        if len(maxH) != len(minH) and len(maxH) > len(minH):  # move from maxH (larger) to minH
+            while (len(maxH) - len(minH)) > 1:
+                heapq.heappush(minH, -1*heapq.heappop(maxH))
+        elif len(maxH) != len(minH) and len(maxH) < len(minH):  # move from minH (larger) to maxH
+            while (len(minH) - len(maxH)) > 1:
+                heapq.heappush(maxH, -1*heapq.heappop(minH))
+
+    # update median tracker
+    if len(count) > 2:
+        heapq.heapify(minH)
+        maxH = reverseH(maxH)
+        if len(count) % 2 == 0:
+            #print "Median is: " + str(abs(maxH[0]))
+            sumM += abs(maxH[0])
+        elif len(count) % 2 != 0:
+            if len(maxH) > len(minH):
+               # print "Median is: " + str(abs(maxH[0]))
+                sumM += abs(maxH[0])
+            elif len(maxH) < len(minH):
+                #print "Median is: " + str(minH[0])
+                sumM += minH[0]
+
+    # print "Min heap length: " + str(len(minH))
+    # print minH
+    # print "Max heap length: " + str(len(maxH))
+    # print maxH
+    # print ""
+
+print sumM
+print sumM % 10000
+
+
