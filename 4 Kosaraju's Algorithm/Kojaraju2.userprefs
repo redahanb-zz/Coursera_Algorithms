@@ -1,0 +1,13 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="../../GitHub/Spectral/Assets/Test Scenes/ReimportingGuard/Shooting.cs">
+    <Files>
+      <File FileName="../../GitHub/Spectral/Assets/Test Scenes/ReimportingGuard/EnemySight.cs" Line="205" Column="10" />
+      <File FileName="../../GitHub/Spectral/Assets/Test Scenes/ReimportingGuard/Shooting.cs" Line="49" Column="5" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
